@@ -1,0 +1,32 @@
+{
+    "name": "listly-preview-page",
+    "version": "0.0.1",
+    "description": "Listly extracted data preview page",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "parcel": "parcel index.html"
+    },
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pikpokjeon/listly-preview.git"
+    },
+    "keywords": [],
+    "author": "pikpok jeon",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/pikpokjeon/listly-preview/issues"
+    },
+    "homepage": "https://github.com/pikpokjeon/listly-preview#readme",
+    "devDependencies": {
+        "@babel/core": "^7.13.15",
+        "@babel/preset-env": "^7.13.15",
+        "parcel": "^2.9.2"
+    },
+    "dependencies": {
+        "nvm": "^0.0.4"
+    }
+}
