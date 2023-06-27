@@ -1,13 +1,14 @@
 import { fragment, createEl, _ } from '../lib/utils'
-import { Container, li, span } from '../dom'
+import { Container, li, span, section } from '../dom'
 import { Fetch } from "../lib/api"
 
 
 const InputBox = createEl( 'div', { class: 'input-box' } )
-const InputBox2 = createEl( 'div', { class: 'input-box' } )
+const DataSection = createEl( 'section', { class: 'data-box' } )
 const Input = ( id ) => createEl( 'input', { class: 'input-field', type: 'APISearch', placeholder: `${id}를 입력하세요` } )
 const Button = createEl( 'div', { class: 'APISearch-button' } )
 const HistoryContainer = createEl( 'ul', { class: 'APISearch-history-container' } )
+const DataUnit = createEl( 'div', { class: 'data-unit' } )
 
 const APIDataInput = ( store ) =>
 {
@@ -56,15 +57,39 @@ const APISearch = ( store ) =>
         const extractedData = await Fetch( token, key )
         // history.push( keyword )
         fetchData( { token, key } )()
-        return ( { data: extractedData } )
+        return ( { fetchedData: extractedData } )
     } )
 
-    const { data } = store.getState()
+    const { fetchedData } = store.getState()
 
-    const HistoryList = Object.entries( data ).map( ( k, i ) =>
-        li( { class: `history-list-${i}` },
-            [span( `${k}` )
-            ] ) )
+    const DataElements = value => Object.entries( value ).map( ( [labelIndex, data] ) =>
+    {
+        console.log( labelIndex, data )
+        const dataLists = Object.entries( data ).map( ( [_labelIndex, _data], _i ) =>
+        {
+            console.log( _labelIndex, _data )
+            console.log( _data.content )
+            return DataUnit( { id: `data-unit-${_i}` }, `${_data.content}` )
+        } )
+
+        return DataSection( [`${labelIndex}`, ...dataLists] )
+    } )
+    console.log( fetchedData )
+    const HistoryList = fetchedData ? Object.entries( fetchedData )
+        .reduce( ( group, [key, value], i ) =>
+        {
+            console.log( key, value )
+            if ( key === 'data' )
+            {
+                group.push( DataElements( value ) )
+                return group
+            }
+            const element = section( { class: `history-list-${i}` },
+                [span( `${key}` ), span( `${value}` )]
+            )
+            group.push( element )
+            return group
+        }, [] ) : []
 
 
     const SubmitButton = ( { onSummit } ) =>

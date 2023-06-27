@@ -5,7 +5,7 @@ import { Store } from './lib/store.js'
 const initStorage = {
     token: '',
     key: '',
-    data: {}
+    fetchedData: {}
 }
 
 const store = Store( initStorage )
